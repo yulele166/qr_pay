@@ -19,8 +19,6 @@ import java.util.Map;
 
 /**
  * 支付宝交易类
- * @author wenwo
- * @date 2017/12/29
  */
 public class AlipayTrade {
 
