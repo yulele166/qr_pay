@@ -8,6 +8,7 @@ import com.exam.demo.model.wechat.WechatConfig;
 import com.exam.demo.model.wechat.WechatUnifiedOrder;
 import com.exam.demo.utils.Http_Utils;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import java.util.TreeMap;
  * Created by Jersey on 2018/11/9 14:40.
  */
 @Controller
+@Slf4j
 public class QRPayController {
 
     private String wechatPayNotifyUrl = "http://yule.com/notify/wechat.html";
@@ -34,13 +36,13 @@ public class QRPayController {
     private String aliPayReturn = "http://yule.com/return/alipay.html";
 
     private OrderInfo orderInfo;
-    private String oid;
+    private String oid;//预订单id
 
     @RequestMapping("/hello")
     public String index(HashMap<String, Object> map){
-        map.put("greeting", "欢迎进入HTML页面");
+        map.put("greeting", "欢迎体验聚合支付");
         map.put("sayHi", "hello world!");
-        System.out.println("欢迎进入HTML页面");
+        log.info("欢迎进入HTML页面");
         return "/index";
     }
 
@@ -73,7 +75,7 @@ public class QRPayController {
         orderInfo.setGoodsName("衣服");
 
         if (userAgent.toLowerCase().contains("MicroMessenger".toLowerCase())){
-            System.out.println(Constants.PAY_MODE_WECHAT+"扫码进入...");
+            log.info(Constants.PAY_MODE_WECHAT+"扫码进入...");
             orderInfo.setPayType(Constants.PAY_MODE_WECHAT);
 
             String openid =  handleWechatBrow(request,response,"http://yule.com/pay/qr");
@@ -89,7 +91,7 @@ public class QRPayController {
                 System.out.println(new Gson().toJson(map));
             }
         }else if (userAgent.toLowerCase().contains("AlipayClient".toLowerCase())){
-            System.out.println(Constants.PAY_MODE_ALI+"扫码进入...");
+            log.info(Constants.PAY_MODE_ALI+"扫码进入...");
             orderInfo.setPayType(Constants.PAY_MODE_ALI);
             String form = mAlipayOrder(orderInfo);
 //            form ="<form name=\"punchout_form\" method=\"post\" action=\"https://openapi.alipay.com/gateway.do?charset=utf-8&method=alipay.trade.wap.pay&sign=C64z%2BnDAhQH7AIVNgvv%2BvOPHh%2FRBJpbavyIuEtQEQ%2Buvrkt5RCyG3vr3NDyQaM7psRW%2BfHrgDqLKI0mtoVQpAL1SeMzFxys71VihQmSP%2B66OT8VqOO3CfmowqNEoBBXAO7uHshD3v14IX6zTSKgH0CtzO1a4wqrFplStLIc5HKg%3D&version=1.0&app_id=2017122501199943&sign_type=RSA&timestamp=2018-11-15+10%3A24%3A54&alipay_sdk=alipay-sdk-java-dynamicVersionNo&format=json\">\n" +
@@ -99,7 +101,7 @@ public class QRPayController {
 //                    "<script></script>";
             map.put("form",form);
             mav.addAllObjects(map);
-            System.out.println(form);
+            log.info(form);
         }
         mav.setViewName("temp");
         return mav;
@@ -117,16 +119,15 @@ public class QRPayController {
         try {
             if (oid.equals(orderInfo.getOrderNo())&&orderInfo!=null&&orderInfo.getOrderStatus()==0){
                 orderInfo.setClientIp("0.0.0.0");//ip
-                System.out.println("web支付宝支付...");
+                log.info("web支付宝支付...");
                 orderInfo.setPayType(Constants.PAY_MODE_ALI);//payType
                 String form = alipayOrder(orderInfo);
                 resultMap.put("form",form);
             }else{
-                System.out.println("一码两付订单不存在");
+                log.error("一码两付订单不存在");
             }
         } catch (Exception e) {
-            System.out.println("web支付宝支付异常");
-            e.printStackTrace();
+            log.error("web支付宝支付异常",e);
         }
         return resultMap;
     }
@@ -269,7 +270,7 @@ public class QRPayController {
             Map<String,String> o = new Gson().fromJson(wxuser,Map.class);
             return o.get("openid");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("授权异常",e);
         }
         return null;
     }
@@ -296,7 +297,7 @@ public class QRPayController {
             paraMap.put("returnUrl", aliPayReturn);
             return alipayTrade.TradeWapPayRequest(paraMap);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("支付宝下单异常",e);
         }
         return null;
     }
@@ -325,7 +326,7 @@ public class QRPayController {
             paraMap.put("returnUrl", aliPayReturn);
             return alipayTrade.mobilePayRequest(paraMap);
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("手机端异常",e);
         }
         return null;
 

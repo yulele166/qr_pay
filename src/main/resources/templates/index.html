@@ -8,17 +8,16 @@
     <script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 </head>
 <body>
-
-    <input type="hidden" id="ip-oid" value="" />
-
-
-    <h1>Hello Spring Boot!!!</h1>
-    <p th:text="${greeting}"></p>
-    <p th:text="${sayHi}"></p>
-    <div class="code-img"></div>
-    <div class="pay-tag">
-        <p>使用微信或支付宝扫码支付</p>
-        <p class="code-bottom-text">无法扫描？<a class="web-alipay" href="javascript:;" style="cursor:pointer;color:blue">打开支付宝网页支付</a></p>
+    <div style="text-align: center;">
+        <input type="hidden" id="ip-oid" value="" />
+        <h1>Hello Spring Boot!!!</h1>
+        <p th:text="${greeting}"></p>
+        <p th:text="${sayHi}"></p>
+        <div class="code-img" style="display: inline-block;"></div>
+        <div class="pay-tag">
+            <p>使用微信或支付宝扫码支付</p>
+            <p class="code-bottom-text">无法扫描？<a class="web-alipay" href="javascript:;" style="cursor:pointer;color:blue">打开支付宝网页支付</a></p>
+        </div>
     </div>
     <script>
 

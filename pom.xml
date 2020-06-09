@@ -50,9 +50,9 @@
             <version>2.8.0</version>
         </dependency>
         <dependency>
-            <groupId>com.alipay.api</groupId>
+            <groupId>com.alipay.sdk</groupId>
             <artifactId>alipay-sdk-java</artifactId>
-            <version>java20170324180803</version>
+            <version>4.10.0.ALL</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -68,6 +68,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
         </dependency>
     </dependencies>
 
