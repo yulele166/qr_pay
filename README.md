@@ -1,4 +1,9 @@
+
+
 # qr_pay
+
+技术栈：springboot + 前端thymeleaf +  二维码插件jquery.qrcode.min.js + lombok日志
+
 **聚合支付**之一个二维码同时支持微信和支付宝  
 ###聚合支付：顾名思义，就是把所有的电子支付集中，对外只展示一套二维码。   
 

@@ -38,19 +38,19 @@ public final class AliPayConfig {
     /**
      * 成功付款回调
      */
-    public static String PAY_NOTIFY = "http://yule.com/pay/ali.html";
+    public static String PAY_NOTIFY = "http://zexige.com/pay/ali.html";
     /**
      * 支付成功回调
      */
-    public static String REFUND_NOTIFY = "http://yule.com/notify/alipay_refund";
+    public static String REFUND_NOTIFY = "http://zexige.com/notify/alipay_refund";
     /**
      * 前台通知地址
      */
-    public static String RETURN_URL = "http://yule.com/return/alipay.html";
+    public static String RETURN_URL = "http://zexige.com/return/alipay.html";
     /**
      * wap前台通知地址
      */
-    public static String WAP_RETURN_URL = "http://yule.com/return/alipay.html";
+    public static String WAP_RETURN_URL = "http://zexige.com/return/alipay.html";
     /**
      * 参数类型
      */

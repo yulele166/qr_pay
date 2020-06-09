@@ -36,7 +36,7 @@ public final class WechatConfig {
     /**
      * 支付成功回调
      */
-    public static final String NOTIFY_PAY = "http://yule.com/notify/wechat.html";
+    public static final String NOTIFY_PAY = "http://zexige.com/notify/wechat.html";
     /**
      * 支付类型
      */

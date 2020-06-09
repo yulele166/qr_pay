@@ -31,9 +31,9 @@ import java.util.TreeMap;
 @Slf4j
 public class QRPayController {
 
-    private String wechatPayNotifyUrl = "http://yule.com/notify/wechat.html";
-    private String aliPayNotifyUrl = "http://yule.com/notify/alipay.html";
-    private String aliPayReturn = "http://yule.com/return/alipay.html";
+    private String wechatPayNotifyUrl = "http://zexige.com/notify/wechat.html";
+    private String aliPayNotifyUrl = "http://zexige.com/notify/alipay.html";
+    private String aliPayReturn = "http://zexige.com/return/alipay.html";
 
     private OrderInfo orderInfo;
     private String oid;//预订单id
@@ -78,7 +78,7 @@ public class QRPayController {
             log.info(Constants.PAY_MODE_WECHAT+"扫码进入...");
             orderInfo.setPayType(Constants.PAY_MODE_WECHAT);
 
-            String openid =  handleWechatBrow(request,response,"http://yule.com/pay/qr");
+            String openid =  handleWechatBrow(request,response,"http://zexige.com/pay/qr");
             if (StringUtils.isNotBlank(openid)){
                 map = this.morderConsume(orderInfo,openid);
 //                map.put("appId","wx9727e9dac06871e1");
@@ -88,7 +88,7 @@ public class QRPayController {
 //                map.put("prepay_id","wx121332272602420f29f1216f3908175858");
 //                map.put("orderNo","480815961883225869");
                 mav.addAllObjects(map);
-                System.out.println(new Gson().toJson(map));
+                log.info(new Gson().toJson(map));
             }
         }else if (userAgent.toLowerCase().contains("AlipayClient".toLowerCase())){
             log.info(Constants.PAY_MODE_ALI+"扫码进入...");
