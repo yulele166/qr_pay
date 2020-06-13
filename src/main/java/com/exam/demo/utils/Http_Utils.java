@@ -97,7 +97,6 @@ public class Http_Utils {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         String body = null;
 
-//        log.info("create httppost:" + url);
         HttpPost post = postForm(url, params);
 
         body = invoke(httpclient, post);
@@ -111,7 +110,6 @@ public class Http_Utils {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         String body = null;
 
-//        log.info("create httppost:" + url);
         HttpGet get = new HttpGet(url);
         body = invoke(httpclient, get);
 
@@ -131,17 +129,13 @@ public class Http_Utils {
     }
 
     private static String paseResponse(HttpResponse response) {
-//        log.info("get response from http server..");
         HttpEntity entity = response.getEntity();
 
-//        log.info("response status: " + response.getStatusLine());
         String charset = EntityUtils.getContentCharSet(entity);
-//        log.info(charset);
 
         String body = null;
         try {
             body = EntityUtils.toString(entity);
-//            log.debug(body);
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -153,7 +147,6 @@ public class Http_Utils {
 
     private static HttpResponse sendRequest(@SuppressWarnings("deprecation") DefaultHttpClient httpclient,
                                             HttpUriRequest httpost) {
-//        log.info("execute post...");
         HttpResponse response = null;
 
         try {
@@ -177,7 +170,6 @@ public class Http_Utils {
         }
 
         try {
-//            log.info("set utf-8 form entity to httppost");
             httpost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

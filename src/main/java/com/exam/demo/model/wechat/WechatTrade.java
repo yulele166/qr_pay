@@ -3,8 +3,7 @@ package com.exam.demo.model.wechat;
 import com.exam.demo.utils.SignUtil;
 import com.exam.demo.utils.XmlUtil;
 import com.google.gson.Gson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -15,9 +14,9 @@ import java.util.TreeMap;
 /**
  * 微信交易
  */
+@Slf4j
 public class WechatTrade {
 
-    private static Logger logger = LoggerFactory.getLogger(WechatTrade.class);
     /**
      * 微信统一下单
      * @param unifiedOrder 要下单的内容
@@ -69,21 +68,15 @@ public class WechatTrade {
              inputStream = request.getInputStream();
             WechatPayNotify notice = XmlUtil.xmlToBean(inputStream, WechatPayNotify.class);
             if (notice == null) return false;
-            logger.debug("微信回调参数:"+ new Gson().toJson(notice));
+            log.debug("微信回调参数:"+ new Gson().toJson(notice));
             String sign = WechatConfig.getInstance().sign(SignUtil.bean2TreeMap(notice)).toUpperCase();
             boolean ischeck = sign.equals(notice.getSign());
-            logger.debug("微信验签结果:"+ischeck);
+            log.debug("微信验签结果:"+ischeck);
             return ischeck;
         } catch (IOException e) {
-            logger.error(">>>微信回调验签 error",e);
+            log.error(">>>微信回调验签 error",e);
             e.printStackTrace();
         } finally {
-      /*  try {
-                if(inputStream!=null) {inputStream.close();}
-            }catch (IOException e){
-              e.printStackTrace();
-            }
-*/
         }
         return false;
     }
@@ -95,18 +88,16 @@ public class WechatTrade {
     public boolean verifyNotify (WechatPayNotify notice){
         try {
             if (notice == null) return false;
-            logger.debug("微信回调参数:"+ new Gson().toJson(notice));
+            log.debug("微信回调参数:"+ new Gson().toJson(notice));
             String sign = WechatConfig.getInstance().sign(SignUtil.bean2TreeMap(notice)).toUpperCase();
             boolean ischeck = sign.equals(notice.getSign());
-            logger.debug("微信验签结果:"+ischeck);
+            log.debug("微信验签结果:"+ischeck);
             return ischeck;
         } catch (Exception e) {
-            logger.error(">>>微信回调验签 error",e);
+            log.error(">>>微信回调验签 error",e);
             e.printStackTrace();
         }
         return false;
     }
-
-
 
 }
